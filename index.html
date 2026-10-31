@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CODEVISION X — Compiler Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">CV<span>✦</span></div><div><b>CODEVISION <em>X</em></b><small>COMPILER LABORATORY</small></div></div>
+    <div class="workspace-label">WORKSPACE</div>
+    <button class="nav-item active" data-tab="editor">▣ <span>Code Workbench</span></button>
+    <button class="nav-item" data-tab="pipeline">◈ <span>Compiler Pipeline</span></button>
+    <button class="nav-item" data-tab="learning">✧ <span>Learning Studio</span></button>
+    <div class="sidebar-bottom"><div class="status-dot"></div><div><b>Compiler engine</b><small>Local · No external compiler</small></div><span class="online">READY</span></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><div class="eyebrow">DEVELOPMENT ENVIRONMENT <span> / </span> <b id="topContext">CODE WORKBENCH</b></div><h1>Build. Analyze. <span>Understand.</span></h1></div><div class="top-actions"><span class="chip"><i></i> Engine ready</span><button id="resetBtn" class="btn btn-quiet">↺ Reset</button><button id="compileBtn" class="btn btn-primary">▶ Compile program</button></div></header>
+    <section class="metrics">
+      <div class="metric"><div class="metric-icon purple">⌘</div><div><small>COMPILER PHASES</small><strong>08 <span>connected</span></strong></div></div>
+      <div class="metric"><div class="metric-icon cyan">▤</div><div><small>TOKENS FOUND</small><strong id="tokenMetric">— <span>run compiler</span></strong></div></div>
+      <div class="metric"><div class="metric-icon coral">⚑</div><div><small>DIAGNOSTICS</small><strong id="errorMetric">— <span>no run yet</span></strong></div></div>
+      <div class="metric"><div class="metric-icon green">◉</div><div><small>OPTIMIZATION</small><strong id="optMetric">Ready <span>constant folding</span></strong></div></div>
+    </section>
+    <section id="editorView" class="view">
+      <div class="section-heading"><div><h2>Code workbench <span class="live-pill">● LIVE</span></h2><p>Write a small C-like program, then inspect each compiler phase.</p></div><div class="select-wrap"><label for="exampleSelect">STARTER TEMPLATE</label><select id="exampleSelect"><option value="basic">Variables & arithmetic</option><option value="if">Conditionals</option><option value="loop">While loop</option><option value="error">Example with errors</option></select></div></div>
+      <div class="workbench">
+        <div class="editor-card">
+          <div class="card-bar"><div class="file-tab"><span class="file-icon">⌁</span> main.cv <span class="unsaved">●</span></div><div class="bar-right"><span>LANGUAGE <b>CV-Lang</b></span><span class="tag">UTF-8</span></div></div>
+          <div class="editor-wrap"><div class="line-numbers" id="lineNumbers">1</div><textarea id="source" spellcheck="false" aria-label="Source code editor"></textarea></div>
+          <div class="editor-footer"><span><i class="tiny-dot"></i> CV-Lang · C-like teaching language</span><span id="cursorInfo">Ln 1, Col 1&nbsp;&nbsp; • &nbsp;&nbsp; Spaces: 2</span></div>
+        </div>
+        <div class="right-stack">
+          <div class="card run-card"><div class="card-title"><div><span class="small-kicker">COMPILER CONTROL</span><h3>Run analysis</h3></div><div class="play-orb">▶</div></div><p>Run all supported phases on your source code locally in the browser.</p><button class="btn btn-primary full" id="analyzeBtn">Compile & analyze <span>→</span></button><div class="phase-mini"><span>01 Lexer</span><span>02 Parser</span><span>03 Semantic</span><span>04 Optimize</span></div></div>
+          <div class="card output-card"><div class="card-title"><div><span class="small-kicker">PROGRAM OUTPUT</span><h3>Execution console</h3></div><span class="console-badge">CONSOLE</span></div><pre id="consoleOutput" class="console">Your program output will appear here after a successful compile.</pre><div class="console-foot"><span>● Local sandbox interpreter</span><span id="runStatus">Waiting</span></div></div>
+        </div>
+      </div>
+      <div class="section-heading phases-heading"><div><h2>Compilation insights</h2><p>Explore the artifacts produced at every stage.</p></div><div class="phase-legend"><span><i class="purple-dot"></i> Front end</span><span><i class="blue-dot"></i> Middle end</span><span><i class="green-dot"></i> Back end</span></div></div>
+      <div class="phase-grid" id="phaseGrid">
+        <button class="phase-card" data-phase="tokens"><span class="phase-num">01</span><span class="phase-symbol purple-bg">⌗</span><b>Lexical analysis</b><small>Token stream & lexemes</small><span class="phase-state">NOT RUN</span></button>
+        <button class="phase-card" data-phase="ast"><span class="phase-num">02</span><span class="phase-symbol blue-bg">⌘</span><b>Syntax analysis</b><small>Parse tree & AST</small><span class="phase-state">NOT RUN</span></button>
+        <button class="phase-card" data-phase="semantic"><span class="phase-num">03</span><span class="phase-symbol cyan-bg">✓</span><b>Semantic analysis</b><small>Types & symbol table</small><span class="phase-state">NOT RUN</span></button>
+        <button class="phase-card" data-phase="tac"><span class="phase-num">04</span><span class="phase-symbol coral-bg">⇄</span><b>Intermediate code</b><small>Three-address code</small><span class="phase-state">NOT RUN</span></button>
+        <button class="phase-card" data-phase="optimized"><span class="phase-num">05</span><span class="phase-symbol green-bg">⚡</span><b>Optimization</b><small>Constant folding</small><span class="phase-state">NOT RUN</span></button>
+        <button class="phase-card" data-phase="machine"><span class="phase-num">06</span><span class="phase-symbol pink-bg">▤</span><b>Code generation</b><small>Virtual instructions</small><span class="phase-state">NOT RUN</span></button>
+      </div>
+      <section class="card inspector" id="inspector"><div class="inspector-head"><div><span class="small-kicker">PHASE INSPECTOR</span><h3 id="inspectorTitle">Your compiler artifacts will show here</h3></div><span class="tag">INTERACTIVE</span></div><div id="inspectorContent" class="inspector-content empty-state">Compile a program, then select a phase card to inspect its output.</div></section>
+    </section>
+    <section id="pipelineView" class="view hidden">
+      <div class="section-heading"><div><h2>Compiler pipeline</h2><p>Follow the source as it passes through each transformation.</p></div></div>
+      <div class="pipeline-flow" id="pipelineFlow">
+        <div class="pipeline-node"><span>01</span><b>Source code</b><small>Characters</small></div><div class="flow-arrow">→</div><div class="pipeline-node"><span>02</span><b>Lexer</b><small>Tokens</small></div><div class="flow-arrow">→</div><div class="pipeline-node"><span>03</span><b>Parser</b><small>AST</small></div><div class="flow-arrow">→</div><div class="pipeline-node"><span>04</span><b>Semantic</b><small>Types / scopes</small></div><div class="flow-arrow">→</div><div class="pipeline-node"><span>05</span><b>IR + Optimize</b><small>TAC</small></div><div class="flow-arrow">→</div><div class="pipeline-node"><span>06</span><b>Codegen</b><small>VM instructions</small></div>
+      </div>
+      <div class="card pipeline-notes"><h3>What each phase does</h3><div class="notes-grid"><article><b>01 · Lexical analysis</b><p>Groups characters into identifiers, keywords, literals, operators and punctuation. Reports unknown characters with line and column.</p></article><article><b>02 · Syntax analysis</b><p>A recursive-descent parser checks grammar and builds an abstract syntax tree for declarations, assignments, expressions, conditionals, loops and print statements.</p></article><article><b>03 · Semantic analysis</b><p>Tracks declared names and inferred types, catches undeclared reads and incompatible assignments, and records symbols.</p></article><article><b>04 · Intermediate representation</b><p>Converts expressions into three-address instructions with temporary values and explicit labels for control flow.</p></article><article><b>05 · Optimization</b><p>Performs safe constant folding and simple algebraic simplification while preserving the supported language's behavior.</p></article><article><b>06 · Code generation & execution</b><p>Emits readable virtual-machine instructions and runs the supported program in a bounded local interpreter.</p></article></div></div>
+    </section>
+    <section id="learningView" class="view hidden">
+      <div class="section-heading"><div><h2>Learning studio</h2><p>Quick reference for compiler design concepts and this project's implementation.</p></div></div>
+      <div class="learning-grid">
+        <article class="learn-card"><div class="learn-icon purple-bg">⌗</div><h3>Lexical analysis</h3><p>The lexer scans source characters and creates tokens. Each token carries a type, value, line and column.</p><code>let score = 10;</code></article>
+        <article class="learn-card"><div class="learn-icon blue-bg">⌘</div><h3>Parsing & AST</h3><p>The parser applies grammar rules and turns tokens into a tree that represents program structure.</p><code>Binary(+, 2, 3)</code></article>
+        <article class="learn-card"><div class="learn-icon cyan-bg">✓</div><h3>Semantic checks</h3><p>Syntax can be valid while meaning is invalid. Symbol tables track declarations and types.</p><code>let x = missing;</code></article>
+        <article class="learn-card"><div class="learn-icon coral-bg">⇄</div><h3>Intermediate code</h3><p>Three-address code makes complex expressions easier to optimize and translate.</p><code>t1 = 2 * 3<br>t2 = 4 + t1</code></article>
+        <article class="learn-card"><div class="learn-icon green-bg">⚡</div><h3>Optimization</h3><p>Constant folding computes expressions made entirely from constants at compile time.</p><code>4 + 2 * 3 → 10</code></article>
+        <article class="learn-card"><div class="learn-icon pink-bg">▤</div><h3>Code generation</h3><p>The backend maps the intermediate representation to a simple virtual instruction set.</p><code>LOAD_CONST 10<br>STORE score</code></article>
+      </div>
+      <div class="card language-card"><h3>CV-Lang quick syntax</h3><div class="syntax-columns"><div><b>Declarations</b><code>let count = 3;<br>let label = "hello";</code></div><div><b>Control flow</b><code>if (count &gt; 0) { print(count); }<br>while (count &gt; 0) { count = count - 1; }</code></div><div><b>Expressions</b><code>+ - * / %<br>== != &lt; &gt; &lt;= &gt;= && || !</code></div></div><p class="note">This is an educational, deliberately small C-like language—not a full C/C++ compiler. Functions, arrays, pointers, native machine-code output and advanced data-flow optimization are not implemented.</p></div>
+    </section>
+    <footer><span>CODEVISION X <b>·</b> Compiler Design Laboratory</span><span>Built for learning · Runs locally in your browser</span></footer>
+  </main>
+</div>
+<div id="toast" class="toast">Analysis complete</div>
+<script src="compiler.js"></script><script src="app.js"></script>
+</body></html>
